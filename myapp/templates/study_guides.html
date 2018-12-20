@@ -1,0 +1,12 @@
+<html>
+<head>
+    <title>Study Guides</title>
+</head>
+<body>
+    <h1>{{ user.name }}'s Study Guides</h1>
+
+    {% for sg in study_guide_list %}
+        <p><a href='{{ sg.id }}'>{{ sg.name }}</a></p>
+    {% endfor %}
+</body>
+</html>

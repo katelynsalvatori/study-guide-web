@@ -1,0 +1,12 @@
+<html>
+<head>
+    <title>Users</title>
+</head>
+<body>
+    <h1>Users</h1>
+
+    {% for user in user_list %}
+        <p><a href='../user/{{ user.id }}'>{{ user.name }}</a></p>
+    {% endfor %}
+</body>
+</html>

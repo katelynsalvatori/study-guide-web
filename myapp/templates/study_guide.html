@@ -1,0 +1,15 @@
+<html>
+<head>
+    <title>{{ study_guide.name }}</title>
+</head>
+<body>
+    <h1>{{ study_guide.name }}</h1>
+
+    {% for question in question_list %}
+        <p>{{ forloop.counter }}. {{ question.question.question_text }}</p>
+        {% for answer in question.answers %}
+            <p>&nbsp;&nbsp;&nbsp;&nbsp;{{ forloop.counter }}. {{ answer.answer_text }}</p>
+        {% endfor %}
+    {% endfor %}
+</body>
+</html>
