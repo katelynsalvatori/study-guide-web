@@ -1,11 +1,39 @@
 <html>
 <head>
     <title>{{ user.name }}</title>
+    <script type="text/javascript">
+        function toggleDisplay(displayId) {
+            var currDisplay = document.getElementById(displayId).style.display;
+            document.getElementById(displayId).style.display = currDisplay === "none" ? "" : "none";
+        }
+    </script>
 </head>
 <body>
     <h1>{{ user.name }}</h1>
-    <p><a href='../../studyguides/{{ user.id }}'>Study a study guide</a></p>
-    <p><a href='../../createguide/{{ user.id }}'>Create a new study guide</a></p>
-    <p><a href='../../editguide/{{ user.id }}'>Edit a study guide</a></p>
+    <p><a href='../../'>Home</a></p>
+    <p><a href='#' onclick="toggleDisplay('study')">Study a study guide</a></p>
+    <div id="study" style="display: none">
+        <ul>
+            {% for sg in study_guide_list %}
+            <li><a href='../../studyguide/{{ sg.id }}'>{{ sg.name }}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+    <p><a href='#' onclick="toggleDisplay('create')">Create a new study guide</a></p>
+    <div id="create" style="display: none">
+        <form>
+            Study Guide Name <br>
+            <input type="text">
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+    <p><a href='#' onclick="toggleDisplay('edit')">Edit a study guide</a></p>
+    <div id="edit" style="display: none">
+        <ul>
+            {% for sg in study_guide_list %}
+            <li><a href='#'>{{ sg.name }}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
 </body>
 </html>

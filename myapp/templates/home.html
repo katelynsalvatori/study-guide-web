@@ -1,11 +1,38 @@
 <html>
 <head>
-    <title>Home</title>
+    <title>Study Guide Home</title>
+    <script type="text/javascript">
+        function toggleDisplay(displayId) {
+            var currDisplay = document.getElementById(displayId).style.display;
+            document.getElementById(displayId).style.display = currDisplay === "none" ? "" : "none";
+        }
+    </script>
 </head>
 <body>
-    <h1>Home</h1>
-    <p><a href='../users/'>Select an existing user</a></p>
-    <p><a href='../createuser/'>Create a new user</a></p>
-    <p><a href='../deleteuser/'>Delete user</a></p>
+    <h1>Study Guide Home</h1>
+    <p><a href='#' onclick="toggleDisplay('select')">Select an existing user</a></p>
+    <div id="select" style='display: none'>
+        <ul>
+            {% for user in user_list %}
+            <li><a href='../user/{{ user.id }}'>{{ user.name }}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+    <p><a href='#' onclick="toggleDisplay('create')">Create a new user</a></p>
+    <div id="create" style='display: none'>
+        <form>
+            User Name <br>
+            <input type="text">
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+    <p><a href='#' onclick="toggleDisplay('delete')">Delete user</a></p>
+    <div id="delete" style="display: none">
+        <ul>
+            {% for user in user_list %}
+            <li><a href='#'>{{ user.name }}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
 </body>
 </html>

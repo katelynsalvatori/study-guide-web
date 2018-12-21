@@ -1,25 +1,17 @@
-# Create your views here.
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from models import User, StudyGuide, Question, Answer
 
 def home(request):
-    return render(request, '../templates/home.html', {})
-
-def users(request):
     users = User.objects.all()
-    return render(request, '../templates/users.html', {'user_list': users})
+    return render(request, '../templates/home.html', {'user_list': users})
 
 def user(request, user_id):
     user = User.objects.get(id=user_id)
-    return render(request, '../templates/user.html', {'user': user})
-
-def study_guides(request, user_id):
-    user = User.objects.get(id=user_id)
     study_guides = StudyGuide.objects.filter(owner=user)
-    return render(request, '../templates/study_guides.html', {'user': user, 'study_guide_list': study_guides})
+    return render(request, '../templates/user.html', {'user': user, 'study_guide_list': study_guides})
 
-def study_guide(request, user_id, study_guide_id):
+def study_guide(request, study_guide_id):
     study_guide = StudyGuide.objects.get(id=study_guide_id)
     questions = Question.objects.filter(study_guide=study_guide_id)
     question_list = []

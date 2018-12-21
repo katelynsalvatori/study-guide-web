@@ -23,9 +23,7 @@ admin.autodiscover()
 
 urlpatterns = patterns(
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^users/', views.users),
     url(r'^user/(?P<user_id>[0-9]+)/$', views.user),
-    url(r'^studyguides/(?P<user_id>[0-9]+)/$', views.study_guides),
-    url(r'^studyguides/(?P<user_id>[0-9]+)/(?P<study_guide_id>[0-9]+)/$', views.study_guide),
+    url(r'^studyguide/(?P<study_guide_id>[0-9]+)/$', views.study_guide),
     url(r'^$', views.home),
 )
