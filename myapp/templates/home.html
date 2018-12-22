@@ -20,9 +20,9 @@
     </div>
     <p><a href='#' onclick="toggleDisplay('create')">Create a new user</a></p>
     <div id="create" style='display: none'>
-        <form>
-            User Name <br>
-            <input type="text">
+        <form action='/' method='post'>
+            {% csrf_token %}
+            {{ form }}
             <input type="submit" value="Submit">
         </form>
     </div>
@@ -30,7 +30,12 @@
     <div id="delete" style="display: none">
         <ul>
             {% for user in user_list %}
-            <li><a href='#'>{{ user.name }}</a></li>
+            <li><a href='#' onclick="toggleDisplay('delete-{{ user.id }}')">{{ user.name }}</a></li>
+            <form id="delete-{{ user.id }}" action='/deleteuser/{{ user.id }}/' method='post' style="display: none">
+                {% csrf_token %}
+                Please confirm if you would like to delete this user.<br>
+                <input type="submit" value="Confirm">
+            </form>
             {% endfor %}
         </ul>
     </div>

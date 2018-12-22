@@ -14,24 +14,24 @@
     <p><a href='#' onclick="toggleDisplay('study')">Study a study guide</a></p>
     <div id="study" style="display: none">
         <ul>
-            {% for sg in study_guide_list %}
-            <li><a href='../../studyguide/{{ sg.id }}'>{{ sg.name }}</a></li>
+            {% for study_guide in study_guide_list %}
+            <li><a href='../../studyguide/{{ study_guide.id }}'>{{ study_guide.name }}</a></li>
             {% endfor %}
         </ul>
     </div>
     <p><a href='#' onclick="toggleDisplay('create')">Create a new study guide</a></p>
     <div id="create" style="display: none">
-        <form>
-            Study Guide Name <br>
-            <input type="text">
+        <form action='/user/{{ user.id }}/' method='post'>
+            {% csrf_token %}
+            {{ form }}
             <input type="submit" value="Submit">
         </form>
     </div>
     <p><a href='#' onclick="toggleDisplay('edit')">Edit a study guide</a></p>
     <div id="edit" style="display: none">
         <ul>
-            {% for sg in study_guide_list %}
-            <li><a href='#'>{{ sg.name }}</a></li>
+            {% for study_guide in study_guide_list %}
+            <li><a href='#'>{{ study_guide.name }}</a></li>
             {% endfor %}
         </ul>
     </div>
