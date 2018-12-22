@@ -1,12 +1,9 @@
+{% load static %}
+
 <html>
 <head>
     <title>{{ user.name }}</title>
-    <script type="text/javascript">
-        function toggleDisplay(displayId) {
-            var currDisplay = document.getElementById(displayId).style.display;
-            document.getElementById(displayId).style.display = currDisplay === "none" ? "" : "none";
-        }
-    </script>
+    <script src="{% static "js/common.js" %}" type="text/javascript"></script>
 </head>
 <body>
     <h1>{{ user.name }}</h1>
@@ -31,7 +28,7 @@
     <div id="edit" style="display: none">
         <ul>
             {% for study_guide in study_guide_list %}
-            <li><a href='#'>{{ study_guide.name }}</a></li>
+            <li><a href='/editstudyguide/{{ study_guide.id }}'>{{ study_guide.name }}</a></li>
             {% endfor %}
         </ul>
     </div>

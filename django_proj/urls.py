@@ -10,6 +10,6 @@ urlpatterns = patterns(
     url(r'^user/(?P<user_id>[0-9]+)/$', views.user),
     url(r'^studyguide/(?P<study_guide_id>[0-9]+)/$', views.study_guide),
     url(r'^deleteuser/(?P<user_id>[0-9]+)/$', views.delete_user),
-    url(r'^createstudyguide/(?P<study_guide_id>[0-9]+)/$', views.create_study_guide),
+    url(r'^editstudyguide/(?P<study_guide_id>[0-9]+)/$', views.edit_study_guide),
     url(r'^$', views.home)
 )

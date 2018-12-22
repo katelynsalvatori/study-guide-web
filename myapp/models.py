@@ -18,6 +18,9 @@ class Question(models.Model):
     class Meta:
         db_table = 'questions'
 
+    def get_answers(self):
+        return Answer.objects.filter(question=self)
+
 class StudyGuide(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=32, unique=True)
@@ -25,9 +28,15 @@ class StudyGuide(models.Model):
     class Meta:
         db_table = 'study_guides'
 
+    def get_questions(self):
+        return Question.objects.filter(study_guide=self)
+
 class User(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=32, unique=True)
     class Meta:
         db_table = 'users'
+
+    def get_study_guides(self):
+        return StudyGuide.objects.filter(owner=self)
 

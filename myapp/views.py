@@ -1,7 +1,7 @@
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from models import User, StudyGuide, Question, Answer
-from forms import CreateUserForm, CreateStudyGuideForm
+from forms import CreateUserForm, StudyGuideNameForm, QuestionTextForm, AnswerTextForm
 
 def home(request):
     users = User.objects.all()
@@ -19,20 +19,20 @@ def user(request, user_id):
     if request.method == 'POST':
         study_guide_name = request.POST['study_guide_name']
         new_study_guide = StudyGuide.objects.create(name=study_guide_name, owner=user)
-        return redirect('/createstudyguide/' + str(new_study_guide.id))
+        return redirect('/editstudyguide/' + str(new_study_guide.id))
 
-    study_guides = StudyGuide.objects.filter(owner=user)
-    form = CreateStudyGuideForm()
+    study_guides = user.get_study_guides()
+    form = StudyGuideNameForm()
     return render(request, '../templates/user.html', {'user': user, 'study_guide_list': study_guides, 'form': form})
 
 def study_guide(request, study_guide_id):
     study_guide = StudyGuide.objects.get(id=study_guide_id)
-    questions = Question.objects.filter(study_guide=study_guide_id)
+    questions = study_guide.get_questions()
     question_list = []
     for question in questions:
         entry = {
             'question': question,
-            'answers': Answer.objects.filter(question_id=question.id)
+            'answers': question.get_answers()
         }
         question_list.append(entry)
     template_params = {
@@ -45,6 +45,27 @@ def delete_user(request, user_id):
     User.objects.get(id=user_id).delete()
     return redirect('/')
 
-def create_study_guide(request, study_guide_id):
+def edit_study_guide(request, study_guide_id):
     study_guide = StudyGuide.objects.get(id=study_guide_id)
-    return redirect('/user/' + str(study_guide.owner.id))
+    user = study_guide.owner
+    question_text_form = QuestionTextForm()
+    answer_text_form = AnswerTextForm()
+    question_list = []
+    for question in study_guide.get_questions():
+        answers = question.get_answers()
+        answer_forms = list(map(lambda x: AnswerTextForm(initial={'answer_text': x.answer_text}), answers))
+        entry = {
+            'question': question,
+            'question_form': QuestionTextForm(initial={'question_text': question.question_text, 'is_enabled': question.enabled}),
+            'answers': answers,
+            'answer_forms': answer_forms
+        }
+        question_list.append(entry)
+    template_params = {
+        'study_guide': study_guide,
+        'user': user,
+        'question_list': question_list,
+        'question_form': question_text_form,
+        'answer_form': answer_text_form
+    }
+    return render(request, '../templates/edit_study_guide.html', template_params)

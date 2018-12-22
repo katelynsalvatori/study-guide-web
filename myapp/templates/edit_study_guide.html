@@ -1,0 +1,26 @@
+<html>
+<head>
+    <title>Create/Edit Study Guide</title>
+</head>
+<body>
+    <h1>Create/Edit Study Guide - {{ study_guide.name }}</h1>
+    <p><a href='/user/{{ user.id }}'>Go back</a></p>
+    <form action="/save-study-guide/" method="post">
+        {% csrf_token %}
+        {% for question in question_list %}
+            <div>
+                {{ question.question_form }} <br>
+                {% for answer_form in question.answer_forms %}
+                    {{ answer_form }} <br>
+                {% endfor %}
+            </div>
+            <br>
+        {% endfor %}
+        <div>
+            {{ question_form }} <br>
+            {{ answer_form }} <br>
+        </div>
+        <input type="submit" value="Save">
+    </form>
+</body>
+</html>
