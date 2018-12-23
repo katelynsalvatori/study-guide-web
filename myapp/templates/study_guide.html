@@ -4,6 +4,7 @@
 </head>
 <body>
     <h1>{{ study_guide.name }}</h1>
+    <p><a href='/user/{{ user.id }}'>Go back</a></p>
 
     {% for question in question_list %}
         <p>{{ forloop.counter }}. {{ question.question.question_text }}</p>

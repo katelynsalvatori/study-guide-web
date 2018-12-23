@@ -14,7 +14,7 @@ class Question(models.Model):
     id = models.AutoField(primary_key=True)
     question_text = models.CharField(max_length=256)
     study_guide = models.ForeignKey('StudyGuide')
-    enabled = models.BooleanField(null=False, blank=True)
+    enabled = models.BooleanField(null=False, blank=True, default=True)
     class Meta:
         db_table = 'questions'
 
@@ -29,7 +29,7 @@ class StudyGuide(models.Model):
         db_table = 'study_guides'
 
     def get_questions(self):
-        return Question.objects.filter(study_guide=self)
+        return Question.objects.filter(study_guide=self).order_by('id')
 
 class User(models.Model):
     id = models.AutoField(primary_key=True)
@@ -39,4 +39,3 @@ class User(models.Model):
 
     def get_study_guides(self):
         return StudyGuide.objects.filter(owner=self)
-
