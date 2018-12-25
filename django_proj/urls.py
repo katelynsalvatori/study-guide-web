@@ -15,5 +15,6 @@ urlpatterns = patterns(
     url(r'^deleteanswer/(?P<answer_id>[0-9]+)/$', views.delete_answer),
     url(r'^editstudyguide/(?P<study_guide_id>[0-9]+)/$', views.edit_study_guide),
     url(r'^savestudyguide/(?P<study_guide_id>[0-9]+)/$', views.save_study_guide),
+    url(r'^validate/', views.validate_answers),
     url(r'^$', views.home)
 )

@@ -1,16 +1,33 @@
+{% load static %}
 <html>
 <head>
     <title>{{ study_guide.name }}</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="{% static "js/study_guide.js" %}" type="text/javascript"></script>
 </head>
 <body>
     <h1>{{ study_guide.name }}</h1>
     <p><a href='/user/{{ user.id }}'>Go back</a></p>
 
+    <button id="begin" type="button" onclick='begin("{{ question_list|length }}")'>Begin</button>
+
     {% for question in question_list %}
-        <p>{{ forloop.counter }}. {{ question.question.question_text }}</p>
-        {% for answer in question.answers %}
-            <p>&nbsp;&nbsp;&nbsp;&nbsp;{{ forloop.counter }}. {{ answer.answer_text }}</p>
-        {% endfor %}
+        <div class="question" id="question-{{ forloop.counter }}" style="display: none">
+            <p>{{ forloop.counter }}. {{ question.question.question_text }}</p>
+            <form class="answers" id="{{ forloop.counter }}-answers">
+                {% for answer in question.answers %}
+                    <input type="text" autocomplete="off" class="question-{{ forloop.parentloop.counter }}">
+                {% endfor %}
+                <button type="button" onclick="handleAnswers('{{ forloop.counter }}', '{{ question.question.id }}')" class="question-{{ forloop.counter }}">Submit</button>
+            </form>
+        </div>
+        <div id="question-{{ forloop.counter }}-results"></div>
     {% endfor %}
+    <div id="results" style="display: none">
+        Finished!
+        <form action="/studyguide/{{ study_guide.id }}/" method="get">
+            <button type="submit">Restart</button>
+        </form>
+    </div>
 </body>
 </html>
