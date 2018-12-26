@@ -1,5 +1,6 @@
 # Django settings for django_proj project.
 import os
+import dj_database_url
 
 DEBUG = True
 
@@ -10,14 +11,7 @@ ADMINS = (
 MANAGERS = ADMINS
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'study_guide',
-        'USER': 'admin',
-        'PASSWORD': '',
-        'HOST': 'localhost',
-        'PORT': '',
-    }
+    'default': dj_database_url.config(default=os.environ.get('DATABASE_URL'))
 }
 
 # Hosts/domain names that are valid for this site; required if DEBUG is False
