@@ -1,5 +1,5 @@
 from django import forms
-from models import Question, Answer, StudyGuide, User
+from .models import Question, Answer, StudyGuide, User
 from django.forms.models import inlineformset_factory
 
 class UserForm(forms.ModelForm):

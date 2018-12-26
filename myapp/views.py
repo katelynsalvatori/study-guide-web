@@ -1,9 +1,9 @@
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
-from models import User, StudyGuide, Question, Answer
+from .models import User, StudyGuide, Question, Answer
 from random import shuffle
-import forms
-import utils
+from . import forms
+from . import utils
 
 """
 Django view for the home page
