@@ -1,11 +1,11 @@
-from django.conf.urls import patterns, include, url
+from django.conf.urls import include, url
 from myapp import views
 
 # Enable the admin:
 from django.contrib import admin
 admin.autodiscover()
 
-urlpatterns = patterns(
+urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^user/(?P<user_id>[0-9]+)/$', views.user),
     url(r'^studyguide/(?P<study_guide_id>[0-9]+)/$', views.study_guide),
@@ -17,4 +17,4 @@ urlpatterns = patterns(
     url(r'^savestudyguide/(?P<study_guide_id>[0-9]+)/$', views.save_study_guide),
     url(r'^validate/', views.validate_answers),
     url(r'^$', views.home)
-)
+]

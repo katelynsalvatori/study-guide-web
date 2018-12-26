@@ -18,6 +18,7 @@ class QuestionForm(forms.ModelForm):
     id = forms.IntegerField(min_value=0, required=True, widget=forms.HiddenInput())
     class Meta:
         model = Question
+        fields = ['id', 'study_guide', 'question_text', 'enabled']
         widgets = {
             'id': forms.HiddenInput(),
             'study_guide': forms.HiddenInput(),
@@ -27,6 +28,7 @@ class QuestionForm(forms.ModelForm):
 class AnswerForm(forms.ModelForm):
     class Meta:
         model = Answer
+        fields = ['id', 'question', 'answer_text']
         widgets = {
             'id': forms.HiddenInput(),
             'question': forms.HiddenInput(),
