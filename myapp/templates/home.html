@@ -11,13 +11,13 @@
     <div id="select" style='display: none'>
         <ul>
             {% for user in user_list %}
-            <li><a href='../user/{{ user.id }}'>{{ user.name }}</a></li>
+            <li><a href='{% url "user" user.id %}'>{{ user.name }}</a></li>
             {% endfor %}
         </ul>
     </div>
     <p><a href='#' onclick="toggleDisplay('create')">Create a new user</a></p>
     <div id="create" style='display: none'>
-        <form action='/' method='post'>
+        <form action='{% url "home" %}' method='post'>
             {% csrf_token %}
             {{ form }}
             <input type="submit" value="Submit">
@@ -28,7 +28,7 @@
         <ul>
             {% for user in user_list %}
             <li><a href='#' onclick="toggleDisplay('delete-{{ user.id }}')">{{ user.name }}</a></li>
-            <form id="delete-{{ user.id }}" action='/deleteuser/{{ user.id }}/' method='post' style="display: none">
+            <form id="delete-{{ user.id }}" action='{% url "deleteuser" user.id %}' method='post' style="display: none">
                 {% csrf_token %}
                 Are you sure you want to delete this user?<br>
                 <input type="submit" value="Confirm">

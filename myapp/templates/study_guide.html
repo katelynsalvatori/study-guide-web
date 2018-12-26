@@ -7,7 +7,7 @@
 </head>
 <body>
     <h1>{{ study_guide.name }}</h1>
-    <p><a href='/user/{{ user.id }}'>Go back</a></p>
+    <p><a href='{% url "user" user.id %}'>Go back</a></p>
 
     <button id="begin" type="button" onclick='begin("{{ question_list|length }}")'>Begin</button>
 
@@ -25,7 +25,7 @@
     {% endfor %}
     <div id="results" style="display: none">
         Finished!
-        <form action="/studyguide/{{ study_guide.id }}/" method="get">
+        <form action='{% url "studyguide" study_guide.id %}' method="get">
             <button type="submit">Restart</button>
         </form>
     </div>

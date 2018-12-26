@@ -140,7 +140,7 @@ def save_study_guide(request, study_guide_id):
     # If there's no question id, the data is for a brand new question
     is_new_question = not question_id
     question_text = data['question_text']
-    is_enabled = data['enabled'] if 'enabled' in data else False
+    is_enabled = data['enabled'] == 'on' if 'enabled' in data else False
     answers = data.getlist('answer_text')
 
     # If the user tries to save a blank question, don't try to save anything
