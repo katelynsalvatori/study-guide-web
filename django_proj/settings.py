@@ -2,7 +2,6 @@
 import os
 
 DEBUG = True
-# TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
     # ('Your Name', 'your_email@example.com'),
@@ -85,13 +84,6 @@ STATICFILES_FINDERS = (
 
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = 'ze6n-%4$l@hfg0&v+$14sur&@!urhg0(v4(cywlthq#vq+t8r+'
-
-# List of callables that know how to import templates from various sources.
-# TEMPLATE_LOADERS = (
-#     'django.template.loaders.filesystem.Loader',
-#     'django.template.loaders.app_directories.Loader',
-# #     'django.template.loaders.eggs.Loader',
-# )
 
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
@@ -178,4 +170,3 @@ LOGGING = {
         },
     }
 }
-
