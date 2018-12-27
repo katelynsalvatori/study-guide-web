@@ -23,10 +23,11 @@ class Question(models.Model):
 
 class StudyGuide(models.Model):
     id = models.AutoField(primary_key=True)
-    name = models.CharField(max_length=32, unique=True)
+    name = models.CharField(max_length=32)
     owner = models.ForeignKey('User')
     class Meta:
         db_table = 'study_guides'
+        unique_together = ("name", "owner")
 
     def get_questions(self):
         return Question.objects.filter(study_guide=self).order_by('id')
