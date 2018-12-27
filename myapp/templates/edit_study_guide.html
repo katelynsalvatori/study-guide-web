@@ -11,13 +11,27 @@ TODO: Update this with the following improvements:
 <html>
 <head>
     <title>Create/Edit Study Guide</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Muli" rel="stylesheet">
     <link rel="stylesheet" href="{% static "css/styles.css" %}">
     <script src="{% static "js/common.js" %}" type="text/javascript"></script>
     <script type="text/javascript">
+        var addedAnswers = 0;
+
         function addAnswerField(divId) {
+            addedAnswers += 1;
+            var elementId = "unsaved-answer-" + addedAnswers;
             var div = document.getElementById(divId);
-            div.innerHTML += '{{ answer_form }} <br>'
+            var newElement = document.createElement('div');
+            newElement.innerHTML = '<div id="' + elementId + '">' + 
+            '{{ answer_form }}' + 
+            '<a href="#" onclick="removeField(\'' + elementId + '\')">Delete</a><br></div>'
+            div.appendChild(newElement);
+        }
+
+        function removeField(divId) {
+            var div = document.getElementById(divId);
+            div.parentNode.removeChild(div);
         }
     </script>
 
