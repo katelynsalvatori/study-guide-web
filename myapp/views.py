@@ -46,7 +46,7 @@ use them to render the study view
 """
 def study_guide(request, study_guide_id):
     study_guide = StudyGuide.objects.get(id=study_guide_id)
-    questions = list(study_guide.get_questions())
+    questions = list(study_guide.get_enabled_questions())
     shuffle(questions)
     question_list = []
     for question in questions:

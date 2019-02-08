@@ -32,6 +32,9 @@ class StudyGuide(models.Model):
     def get_questions(self):
         return Question.objects.filter(study_guide=self).order_by('id')
 
+    def get_enabled_questions(self):
+        return Question.objects.filter(study_guide=self, enabled=True).order_by('id')
+
 class User(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=32, unique=True)
