@@ -46,3 +46,8 @@ ul li a {
 input[type=text] {
     width: 30%;
 }
+
+p.correct {
+    color: #19b462;
+    font-size: 18px;
+}

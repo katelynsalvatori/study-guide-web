@@ -25,6 +25,16 @@ function begin(questionsLength) {
 }
 
 /*
+Submit answers when enter is pressed in answer field
+*/
+function handleEnterOnAnswer(e, questionNum, questionId) {
+    if (e.keyCode == 13) {
+        e.preventDefault();
+        handleAnswers(questionNum, questionId);
+    }
+}
+
+/*
 Handle the user's answers for the indicated question upon submission:
 - Disable futher input for the question
 - Validate the correctness of the submitted answer(s)

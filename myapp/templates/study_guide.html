@@ -22,7 +22,7 @@
             <p>{{ forloop.counter }}. {{ question.question.question_text }}</p>
             <form class="answers" id="{{ forloop.counter }}-answers">
                 {% for answer in question.answers %}
-                    <input type="text" autocomplete="off" class="question-{{ forloop.parentloop.counter }}">
+                    <input onkeypress="handleEnterOnAnswer(event, '{{ forloop.parentloop.counter }}', '{{ question.question.id }}')" type="text" autocomplete="off" class="question-{{ forloop.parentloop.counter }}">
                 {% endfor %}
                 <button type="button" onclick="handleAnswers('{{ forloop.counter }}', '{{ question.question.id }}')" class="question-{{ forloop.counter }}">Submit</button>
             </form>
