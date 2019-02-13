@@ -31,9 +31,6 @@
     {% endfor %}
     <div id="results" style="display: none">
         Finished!
-        <form action='{% url "studyguide" study_guide.id %}' method="get">
-            <button type="submit">Restart</button>
-        </form>
     </div>
 </body>
 </html>

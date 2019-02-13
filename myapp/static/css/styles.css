@@ -1,11 +1,7 @@
 body {
-    /*background: #cce6ff;*/
+    margin: 15px 15px 35px 15px;
 }
 
-/*h1 {
-    color:  #ff4dc4;
-}
-*/
 a, a:visited {
     color: #1a90ff;
     text-decoration: none;
