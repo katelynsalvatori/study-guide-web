@@ -46,3 +46,7 @@ ul li {
 ul li a {
     border: none;
 }
+
+input[type=text] {
+    width: 30%;
+}
