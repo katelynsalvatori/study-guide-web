@@ -51,3 +51,11 @@ p.correct {
     color: #19b462;
     font-size: 18px;
 }
+
+label {
+    padding-right: 10px;
+}
+
+label[for="id_answer_text"] {
+    padding-right: 19px;
+}
