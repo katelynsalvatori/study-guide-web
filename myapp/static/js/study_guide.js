@@ -1,12 +1,21 @@
 // JavaScript for templates/study_guide.html
 
 var numQuestions = 0;
+var numCorrect = 0;
+var numValidated = 0;
 
 /*
 Display the nth question in the study guide view (where n = given number)
 */
 function displayQuestion(number) {
-    document.getElementById("question-" + number).style.display = "";
+    var elementId = "question-" + number;
+    var element = document.getElementById(elementId);
+    element.style.display = "";
+    // Focus on and scroll to the next question
+    $(element).find("input")[0].focus();
+    $('html, body').animate({
+        scrollTop: $("#" + elementId).offset().top
+    }, 1000);
 }
 
 /*
@@ -47,9 +56,6 @@ function handleAnswers(questionNum, questionId) {
     if (questionNum < numQuestions) {
         displayQuestion(parseInt(questionNum) + 1);
     }
-    else {
-        finish();
-    }
 }
 
 /*
@@ -78,7 +84,14 @@ function validateAnswers(questionNum, questionId) {
     var enteredAnswers = findAnswers(questionNum);
 
     onSuccess = function(data) {
-        document.getElementById("question-" + questionNum + "-results").innerHTML = data
+        if (data.includes("Correct!")) {
+            numCorrect++;
+        }
+        numValidated++;
+        if (numValidated === numQuestions) {
+            finish((numCorrect / numQuestions) * 100);
+        }
+        document.getElementById("question-" + questionNum + "-results").innerHTML = data;
     };
 
     onFailure = function(jxhr, status, e) {
@@ -100,6 +113,19 @@ function validateAnswers(questionNum, questionId) {
 /*
 Finish the study session by displaying the results to the user
 */
-function finish() {
-    document.getElementById("results").style.display = "";
+function finish(percentCorrect) {
+    var results;
+    var resultsElement = document.getElementById("results");
+    if (numQuestions > 0) {
+        results = "Finished!<br>Correct answers: " + numCorrect +
+            "/" + numQuestions + " = " + percentCorrect.toFixed(2) + "%";
+    }
+    else {
+        results = "No questions to study! Add some by editing this study guide.";
+    }
+    resultsElement.innerHTML = results;
+    resultsElement.style.display = "";
+    $('html, body').animate({
+        scrollTop: $("#results").offset().top
+    }, 1000);
 }
