@@ -1,5 +1,6 @@
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
+from django.views.decorators.csrf import csrf_exempt
 from .models import User, StudyGuide, Question, Answer
 from random import shuffle
 from . import forms
@@ -133,6 +134,7 @@ def edit_study_guide(request, study_guide_id):
 Django view for saving study guide data to the database
 Extract the data from the POST and use it to update the database
 """
+@csrf_exempt
 def save_study_guide(request, study_guide_id):
     study_guide = StudyGuide.objects.get(id=study_guide_id)
     data = request.GET

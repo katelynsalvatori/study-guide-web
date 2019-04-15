@@ -94,8 +94,8 @@ function saveStudyGuide(studyGuideId) {
 
     $.ajax({
         url: "/savestudyguide/" + studyGuideId + "/",
-        type: "GET",
-        data: data,
+        type: "POST",
+        data: JSON.stringify(data),
         success: onSuccess,
         error: onFailure
     });
