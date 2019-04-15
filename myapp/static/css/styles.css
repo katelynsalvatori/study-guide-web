@@ -13,15 +13,11 @@ a:hover {
 }
 
 a.delete-link, a:visited.delete-link {
-    padding: 5px;
-    border: 1px solid black;
-    background: #f44336;
-    color: black;
+    color: #f44336;
 }
 
 a:hover.delete-link {
-    color: #f44336;
-    background: black;
+    color: black;
 }
 
 ul {
@@ -66,4 +62,9 @@ label[for="id_answer_text"] {
     background-color: #cce6ff;
     width: 40%;
     padding: 10px;
+}
+
+#successful {
+    background: #a7e3a7;
+    padding: 5px;
 }

@@ -1,13 +1,4 @@
 {% load static %}
-
-<!--
-TODO: Update this with the following improvements:
-    - Don't clear unsaved inputs when adding an answer field
-    - Save data without having to refresh the page
-    - Display feedback to the user when data is saved
-    - Add "+ Question" option instead of relying on page refresh
-      for adding new questions
--->
 <html>
 <head>
     <title>Create/Edit Study Guide</title>
@@ -15,6 +6,7 @@ TODO: Update this with the following improvements:
     <link href="https://fonts.googleapis.com/css?family=Muli" rel="stylesheet">
     <link rel="stylesheet" href="{% static "css/styles.css" %}">
     <script src="{% static "js/common.js" %}" type="text/javascript"></script>
+    <script src="{% static "js/edit_study_guide.js" %}" type="text/javascript"></script>
     <script type="text/javascript">
         var addedAnswers = 0;
 
@@ -25,13 +17,8 @@ TODO: Update this with the following improvements:
             var newElement = document.createElement('div');
             newElement.innerHTML = '<div id="' + elementId + '">' + 
             '{{ answer_form }}' + 
-            '<a href="#" onclick="removeField(\'' + elementId + '\')">Delete</a><br></div>'
+            '<a onclick="removeField(\'' + elementId + '\')">Delete</a><br></div>'
             div.appendChild(newElement);
-        }
-
-        function removeField(divId) {
-            var div = document.getElementById(divId);
-            div.parentNode.removeChild(div);
         }
     </script>
 
@@ -40,12 +27,15 @@ TODO: Update this with the following improvements:
     </style>
 </head>
 <body>
+    <div id="successful" style="display: none">
+        <p>Study guide saved successfully!</p>
+    </div>
     <h1>Create/Edit Study Guide - {{ study_guide.name }}</h1>
     <p><a href='{% url "user" user.id %}'>Go back</a></p>
     {% for question in question_list %}
-    <form action='{% url "savestudyguide" study_guide.id %}' method="post">
+    <form>
         {% csrf_token %}
-            <div id="question-{{ question.id }}">
+            <div id="question-{{ question.id }}" class="existing-question">
                 {{ question.question_form }}
                 <a href='{% url "deletequestion" question.id %}'>Delete</a>
                 <br>
@@ -55,21 +45,29 @@ TODO: Update this with the following improvements:
                     <br>
                 {% endfor %}
             </div>
-            <a href="#" onclick="addAnswerField('question-{{ question.id }}')">+ Answer</a><br>
-            <input type="submit" value="Save">
-            <br>
+            <a onclick="addAnswerField('question-{{ question.id }}')">+ Answer</a><br>
     </form>
     {% endfor %}
-    <form action='{% url "savestudyguide" study_guide.id %}' method="post">
+    <form style="display:none" id="new-question-form">
         {% csrf_token %}
-        <div id="new-question">
-            {{ question_form }} <br>
+        <div>
+            {{ question_form }}
+            <a>Delete</a>
+            <br>
             {{ answer_form }} <br>
         </div>
-        <a href="#" onclick="addAnswerField('new-question')">+ Answer</a><br>
-        <input type="submit" value="Save">
+        <a>+ Answer</a><br>
     </form>
+    <div id="new-questions">
+    </div>
+    <a onclick="addQuestionField()">+ Question</a>
     <br>
+    <br>
+    <div>
+        <form id="save-guide" action="#" onsubmit="saveStudyGuide('{{ study_guide.id }}')">
+            <input type="submit" value="Save Study Guide">
+        </form>
+    </div>
     <div>
         <p><a class="delete-link" href='#' onclick="toggleDisplay('delete-guide')">Delete this study guide</a></p>
         <form id="delete-guide" action='{% url "deletestudyguide" study_guide.id %}' method='post' style="display: none">

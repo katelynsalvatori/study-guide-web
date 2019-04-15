@@ -131,55 +131,15 @@ def edit_study_guide(request, study_guide_id):
 
 """
 Django view for saving study guide data to the database
-Extact the data from the POST and use it to update the database
+Extract the data from the POST and use it to update the database
 """
 def save_study_guide(request, study_guide_id):
     study_guide = StudyGuide.objects.get(id=study_guide_id)
-    data = request.POST
-    question_id = data['id']
-    # If there's no question id, the data is for a brand new question
-    is_new_question = not question_id
-    question_text = data['question_text']
-    is_enabled = data['enabled'] == 'on' if 'enabled' in data else False
-    answers = data.getlist('answer_text')
+    data = request.GET
 
-    # If the user tries to save a blank question, don't try to save anything
-    # TODO: move this validation to the front end
-    if not question_text:
-        return redirect('/editstudyguide/' + str(study_guide_id))
+    utils.process_study_guide_update(study_guide, data)
 
-    # For a new question, simply create the question and all the answers
-    if is_new_question:
-        new_question = Question.objects.create(
-            question_text=question_text, enabled=is_enabled, study_guide=study_guide)
-        for answer in answers:
-            Answer.objects.create(answer_text=answer, question=new_question)
-    else:
-        question = Question.objects.get(id=question_id)
-
-        # Update the question data and save it
-        question.question_text = question_text
-        question.enabled = is_enabled
-        question.save()
-
-        # Get the existing answers from the database to compare to those from the request
-        existing_answers = Answer.objects.filter(question=question)
-        existing_answer_texts = [x.answer_text for x in existing_answers]
-
-        # The following two-step process for updating answers is basically a workaround
-        # for not having answer ids passed through the POST
-
-        # Delete answers from the database if they're not in the HTTP request
-        for answer in existing_answers:
-            if answer.answer_text not in answers:
-                answer.delete()
-
-        # Create answers in the database if they don't already exist
-        for answer_text in answers:
-            if answer_text not in existing_answer_texts and answer_text != '':
-                Answer.objects.create(answer_text=answer_text, question=question)
-
-    return redirect('/editstudyguide/' + str(study_guide_id))
+    return HttpResponse("ok")
 
 """
 Django view for validating the correctness of the user's entered answers
