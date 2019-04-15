@@ -56,8 +56,6 @@ function saveStudyGuide(studyGuideId) {
     var existingQuestions = document.getElementsByClassName("existing-question");
     var unsavedQuestions = document.getElementsByClassName("unsaved-question");
 
-    var unsavedQuestionsData = [];
-
     data = {};
 
     for (var i = 0; i < existingQuestions.length; i++) {
@@ -84,8 +82,9 @@ function saveStudyGuide(studyGuideId) {
         data["unsaved-" + i + "-answer_texts"] = answerTexts;
     }
 
-    var onSuccess = function() {
-        $("#successful").show().delay(2500).fadeOut();
+    var onSuccess = function(data) {
+        // Redirect on success
+        window.location.href = "/editstudyguide/" + studyGuideId + "/";
     };
 
     var onFailure = function(jxhr, status, e) {
@@ -95,7 +94,7 @@ function saveStudyGuide(studyGuideId) {
     $.ajax({
         url: "/savestudyguide/" + studyGuideId + "/",
         type: "POST",
-        data: JSON.stringify(data),
+        data: data,
         success: onSuccess,
         error: onFailure
     });

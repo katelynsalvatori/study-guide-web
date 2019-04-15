@@ -137,11 +137,11 @@ Extract the data from the POST and use it to update the database
 @csrf_exempt
 def save_study_guide(request, study_guide_id):
     study_guide = StudyGuide.objects.get(id=study_guide_id)
-    data = request.GET
+    data = request.POST
 
     utils.process_study_guide_update(study_guide, data)
 
-    return HttpResponse("ok")
+    return HttpResponse()
 
 """
 Django view for validating the correctness of the user's entered answers
